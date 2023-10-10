@@ -10,3 +10,5 @@ format:
     documentclass: article
     margin-left: 30mm
     margin-right: 30mm
+bibliography: references.bib
+
