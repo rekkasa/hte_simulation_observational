@@ -1,0 +1,12 @@
+project:
+  title: |
+    Estimating individualized treatment effects from randomized controlled
+    trials: a simulation study to compare risk-based approaches
+  output-dir: docs
+  render: 
+    - "quarto/*.qmd"
+format: 
+  pdf:
+    documentclass: article
+    margin-left: 30mm
+    margin-right: 30mm
