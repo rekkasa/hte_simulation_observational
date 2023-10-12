@@ -2,5 +2,10 @@
 docs/*pdf
 .Rhistory
 
+*cache
+Rplots.pdf
+figures/*png
+figures/*pdf
+
 data/*/*csv
 /.quarto/

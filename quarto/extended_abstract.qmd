@@ -1,13 +1,81 @@
 ---
 title: Extended abstract
 output-file: extended_abstract.pdf
+bibliography: ../references.bib
+csl: ../jamia.csl
+include-in-header: ../preamble.tex
 ---
 
-```{r load_data}
-#| echo: false
-#| message: false
-#| warning: false
+# Introduction
 
-analysisIds <- readr::read_csv("../data/extended_abstract/analysisIds.csv")
-rmse <- readr::read_csv("../data/extended_abstract/rmse.csv")
+In a prior simulation study we showed that in the RCT setting an interaction
+between baseline risk and treatment assignment should be considered to improve
+treatment effect predictions [@rekkas2023estimating]. We would like to extend
+these simulations to the observational setting.
+
+# Methods
+
+## Prediction of benefit
+
+We observe data $(Z, X, Y)$, where for each patient $Z_i= 0, 1$ is the
+treatment status, $Y_i = 0, 1$ is the observed outcome and $X_i$ is a set of
+covariates measured. Let $\{Y_i(z), z=0, 1\}$ denote the unobservable potential
+outcomes. We observe $Y_i = Z_iY_i(1) + (1 - Z_i)Y_i(0)$. We are interested in
+predicting the conditional average treatment effect (CATE), 
+$$\tau(x) = E\{Y(0) - Y(1)|X=x\}$$ 
+
+If we assume $r = r(X)$, then $r(X)$ is a prognostic score if and only if
+$Y(0)\indep X\given r(X)$.
+
+If $m(X)$ modifies treatment effect, then
+
+$$
+\text{E}\{Y(0)-Y(1)\given X=x\} = \text{E}\{Y(0)\given Z=0,r(x),m(x)\} - \text{E}\{Y(1)\given Z=0,r(x),m(x)\}
+$$
+
+If we assume that effect modification $m(X)$ is a function of baseline risk,
+i.e., $m(X) = f(r(X))$, we can estimate treatment benefit $b(r)$ from
+
+$$
+b(r) = \text{E}\{Y(0)-Y(1)\given r(x)=r\} = \mu(r, 0) - \mu(r, 1),
+$$ {#eq-benefit}
+
+where $\mu(r, z) = \text{E}\{Y \given, r(x)=r, Z = z\}$
+
+
+
+
+## Simulation settings
+
+For the underlying truth of our simulation scenarios we used the causal
+structure of @fig-leacy.
+
+```{r fig-leacy, cache=FALSE, echo=FALSE, fig.cap="Leacy simulation settings.", out.width="80%"}
+knitr::include_graphics("../figures/leacy.png")
 ```
+
+
+# Results
+
+```{r fig-risk-constant-main, cache=FALSE, echo=FALSE, fig.cap="Root mean squared error for the considered methods across 200 replications calculated in a super population of 100,000 patients. The simulated scenario assumed a constant relative treatment effect, treatment-related harm was absent, sample size was 17,000. The propensity score model was not misspecified. The risk model was not misspecified."}
+knitr::include_graphics("../figures/scenario_13.pdf")
+```
+
+```{r fig-risk-linear-main, cache=FALSE, echo=FALSE, fig.cap="Root mean squared error for the considered methods across 200 replications calculated in a super population of 100,000 patients. The simulated scenario assumed linear deviations from a constant relative treatment effect, treatment-related harm was absent, sample size was 17,000. The propensity score model was not misspecified. The risk model was not misspecified."}
+knitr::include_graphics("../figures/scenario_85.pdf")
+```
+
+```{r fig-risk-quadratic-main, cache=FALSE, echo=FALSE, fig.cap="Root mean squared error for the considered methods across 200 replications calculated in a super population of 100,000 patients. The simulated scenario assumed quadratic deviations from a constant relative treatment effect, treatment-related harm was absent, sample size was 17,000. The propensity score model was not misspecified. The risk model was not misspecified."}
+knitr::include_graphics("../figures/scenario_157.pdf")
+```
+
+```{r fig-risk-nonmonotnic-main, cache=FALSE, echo=FALSE, fig.cap="Root mean squared error for the considered methods across 200 replications calculated in a super population of 100,000 patients. The simulated scenario assumed non-monotonic deviations from a constant relative treatment effect, treatment-related harm was absent, sample size was 17,000. The propensity score model was not misspecified. The risk model was not misspecified."}
+knitr::include_graphics("../figures/scenario_229.pdf")
+```
+
+
+
+# References {.unnumbered}
+
+::: {#refs}
+:::
